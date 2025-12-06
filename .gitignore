@@ -1,0 +1,83 @@
+# ---------------------------
+# Python
+# ---------------------------
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.ipynb_checkpoints/
+
+# Virtual environment
+venv/
+env/
+
+# ---------------------------
+# Data Files (CSV, Excel, etc.)
+# ---------------------------
+# Ignore all raw + cleaned + forecasted CSVs
+*.csv
+*.xlsx
+*.xls
+*.parquet
+
+# Allow sample or schema CSVs if needed:
+!data/sample_*.csv
+
+# ---------------------------
+# Power BI
+# ---------------------------
+*.pbix.lock
+*.pbit
+.powerbi/
+
+# ---------------------------
+# Node / Frontend
+# ---------------------------
+node_modules/
+dist/
+build/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Vite cache
+/.vite/
+
+# ---------------------------
+# Logs
+# ---------------------------
+*.log
+
+# ---------------------------
+# OS Files
+# ---------------------------
+.DS_Store
+Thumbs.db
+
+# ---------------------------
+# Environment Files
+# ---------------------------
+.env
+.env.local
+.env.*
+
+# ---------------------------
+# IDE / Editor
+# ---------------------------
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ---------------------------
+# Compiled LaTeX files
+# ---------------------------
+*.aux
+*.out
+*.toc
+*.fls
+*.fdb_latexmk
+*.log
+*.synctex.gz
+
+data/*
