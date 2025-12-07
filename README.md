@@ -116,8 +116,7 @@ Dashboards include:
 - Commodity anomaly distribution  
 - Daily anomaly trend  
 
-*(Insert screenshot placeholders)*  
-```
+
 
 ![overview](./screenshots/overview.png)
 ![deep\_dive](./screenshots/commodity.png)
@@ -125,7 +124,6 @@ Dashboards include:
 ![anomalies](./screenshots/anomalies.png)
 ![forecast](./screenshots/forecast.png)
 
-```
 
 ---
 

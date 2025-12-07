@@ -52,17 +52,4 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
-.pbi-wrapper {
-  overflow: hidden;
-  position: relative;
-  max-width: 100%;
-}
 
-/* Apply the scale fix */
-.pbi-iframe {
-  width: 1600px;   /* Set to your Power BI canvas width */
-  height: 1100px;   /* Set to your Power BI canvas height */
-  transform: scale(0.65);
-  transform-origin: top left;
-  border: none;
-}

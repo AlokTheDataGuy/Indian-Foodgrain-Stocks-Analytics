@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FileText, Code, Database, BarChart3, Download, ExternalLink, ChevronDown, ChevronUp, Github, Linkedin, Mail } from 'lucide-react';
+import { FileText, Code, Database, BarChart3, Download, View, ExternalLink, ChevronDown, ChevronUp, Github, Linkedin, Mail } from 'lucide-react';
 
 export default function FoodgrainDashboard() {
   const [activeTab, setActiveTab] = useState('dashboard');
@@ -7,11 +7,12 @@ export default function FoodgrainDashboard() {
 
   // Replace these with your actual links
   const links = {
-    powerbi: 'https://app.powerbi.com/reportEmbed?reportId=3d83cb04-7a0e-467f-835d-592f1fdf7396&autoAuth=true&ctid=56c1d497-700b-49cf-8f8d-3dd6b20d522f', // Get from Power BI Service -> File -> Embed report -> Website or portal
-    report: 'YOUR_GOOGLE_DRIVE_REPORT_LINK',
+    powerbi: 'https://app.powerbi.com/reportEmbed?reportId=3d83cb04-7a0e-467f-835d-592f1fdf7396&autoAuth=true&ctid=56c1d497-700b-49cf-8f8d-3dd6b20d522f&navContentPaneEnabled=false&filterPaneEnabled=true',
+    report: 'https://drive.google.com/file/d/1u0ZBS5nQxcECOvM5_2ygXis6L0R4eeF6/view?usp=sharing',
     notebook: 'https://drive.google.com/drive/folders/16PIuugM8tDYp4rFYppV0g_fTB-deBikG?usp=sharing',
     data: 'https://drive.google.com/drive/folders/1UHsvuj50QebVc3VSkmE4GmUBG3Mgzq0k?usp=sharing',
-    github: 'YOUR_GITHUB_REPO_LINK'
+    github: 'https://github.com/AlokTheDataGuy/Indian-Foodgrain-Stocks-Analytics',
+    ogd: 'https://www.data.gov.in/resource/daily-fci-stock-position-commodity'
   };
 
   const techStack = [
@@ -53,7 +54,7 @@ export default function FoodgrainDashboard() {
 
   const stats = [
     { label: 'Data Points', value: '2.2M+' },
-    { label: 'Time Period', value: '2010-2025' },
+    { label: 'Time Period', value: '2011-2025' },
     { label: 'States Covered', value: '26' },
     { label: 'Commodities', value: '4' }
   ];
@@ -81,10 +82,6 @@ export default function FoodgrainDashboard() {
               <a href={links.github} target="_blank" rel="noopener noreferrer"
                 className="p-2 hover:bg-gray-100 rounded-full transition">
                 <Github className="w-5 h-5 text-gray-600" />
-              </a>
-              <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer"
-                className="p-2 hover:bg-gray-100 rounded-full transition">
-                <Linkedin className="w-5 h-5 text-gray-600" />
               </a>
             </div>
           </div>
@@ -114,8 +111,8 @@ export default function FoodgrainDashboard() {
             <button
               onClick={() => setActiveTab('dashboard')}
               className={`flex-1 px-6 py-4 text-sm font-medium transition ${activeTab === 'dashboard'
-                  ? 'bg-green-600 text-white'
-                  : 'text-gray-600 hover:bg-gray-50'
+                ? 'bg-green-600 text-white'
+                : 'text-gray-600 hover:bg-gray-50'
                 }`}>
               <BarChart3 className="w-5 h-5 inline mr-2" />
               Dashboard
@@ -123,8 +120,8 @@ export default function FoodgrainDashboard() {
             <button
               onClick={() => setActiveTab('resources')}
               className={`flex-1 px-6 py-4 text-sm font-medium transition ${activeTab === 'resources'
-                  ? 'bg-green-600 text-white'
-                  : 'text-gray-600 hover:bg-gray-50'
+                ? 'bg-green-600 text-white'
+                : 'text-gray-600 hover:bg-gray-50'
                 }`}>
               <FileText className="w-5 h-5 inline mr-2" />
               Resources
@@ -132,8 +129,8 @@ export default function FoodgrainDashboard() {
             <button
               onClick={() => setActiveTab('about')}
               className={`flex-1 px-6 py-4 text-sm font-medium transition ${activeTab === 'about'
-                  ? 'bg-green-600 text-white'
-                  : 'text-gray-600 hover:bg-gray-50'
+                ? 'bg-green-600 text-white'
+                : 'text-gray-600 hover:bg-gray-50'
                 }`}>
               <Code className="w-5 h-5 inline mr-2" />
               About Project
@@ -146,28 +143,29 @@ export default function FoodgrainDashboard() {
           <div className="space-y-6">
             <div className="bg-white rounded-lg shadow-lg overflow-hidden">
               <div className="bg-gradient-to-r from-green-600 to-green-700 px-6 py-4">
-                <h2 className="text-xl font-bold text-white">Interactive Dashboard</h2>
+                <h2 className="text-xl font-bold text-white">Foodgrain Analytics & Forecasting Dashboard</h2>
                 <p className="text-green-100 text-sm mt-1">
-                  Overview → Commodity → Geographic → Anomalies → Forecast
+                  National KPIs → Commodity Trends → State Insights → Anomaly Detection → Forecasting
                 </p>
               </div>
 
               {/* Power BI Embed */}
               <div className="p-4 bg-gray-50">
-                <div className="bg-white rounded-lg shadow-inner border-2 border-dashed border-gray-300 flex justify-center">
-    <div
-      className="pbi-wrapper"
-      style={{ width: "1008px", height: "730px" }} // 1600x900 scaled by 0.63
-    >
+                <div className="bg-white rounded-lg shadow-inner border-2 border-dashed border-gray-300">
+                  <div className="w-full overflow-hidden">
                     <iframe
                       title="Foodgrain Dashboard"
                       src={links.powerbi}
                       frameBorder="0"
                       allowFullScreen={true}
-                      className="pbi-iframe rounded-lg"
+                      className="w-full"
+                      style={{
+                        height: '56.25vw', // 16:9 aspect ratio (9/16 = 0.5625)
+                        maxHeight: '720px', // Maximum height
+                        minHeight: '400px'  // Minimum height for mobile
+                      }}
                     />
                   </div>
-
                 </div>
               </div>
 
@@ -181,8 +179,8 @@ export default function FoodgrainDashboard() {
                   </a>
                   <a href={links.report} target="_blank" rel="noopener noreferrer"
                     className="inline-flex items-center px-4 py-2 bg-white border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition text-sm font-medium">
-                    <Download className="w-4 h-4 mr-2" />
-                    Download Report
+                    <FileText className="w-4 h-4 mr-2" />
+                    View Report
                   </a>
                 </div>
               </div>
@@ -296,16 +294,17 @@ export default function FoodgrainDashboard() {
               <h2 className="text-2xl font-bold text-gray-900 mb-4">Project Overview</h2>
               <p className="text-gray-700 leading-relaxed mb-4">
                 A comprehensive end-to-end data analytics project analyzing India's foodgrain stocks across
-                26 states and 177 districts from 2010-2025. The project includes data collection from India's
-                Open Government Data Portal, extensive cleaning and processing using Python and SQL, time series
+                26 states and 177 districts from 2010-2025. The project includes data collection from <a href={links.ogd} target="_blank" rel="noopener noreferrer"> India's
+                  Open Government Data Portal</a>, extensive cleaning and processing using Python and SQL, time series
                 forecasting with Prophet, anomaly detection using Z-scores, and interactive visualization
                 through a 5-page Power BI dashboard.
               </p>
 
               <div className="bg-green-50 border-l-4 border-green-600 p-4 mt-4">
                 <p className="text-sm text-green-800">
-                  <strong>Key Achievement:</strong> Built predictive models with 85%+ accuracy and identified
-                  5,000+ anomalies in historical data, providing actionable insights for foodgrain management.
+                    <strong>Key Achievement:</strong> Processed and analyzed over <strong>2.2M+</strong> foodgrain
+  stock records, built a fully reproducible pipeline for national–state–district aggregation, 30D and 90D forecasting, and detected <strong>4,992 anomalies </strong> 
+   across commodities.
                 </p>
               </div>
             </div>
@@ -341,7 +340,7 @@ export default function FoodgrainDashboard() {
                   <div className="border-l-4 border-blue-500 pl-4">
                     <h3 className="font-semibold text-gray-900 mb-2">1. Data Collection</h3>
                     <p className="text-sm text-gray-600">
-                      Collected 2.2M+ records from India's OGD Portal covering 4 commodities (Paddy, Wheat,
+                      Collected 2.2M+ records from  <a href={links.ogd} target="_blank" rel="noopener noreferrer">India's OGD Portal</a> covering 4 commodities (Paddy, Wheat,
                       Rice-Raw, Rice-Parboiled) across 26 states and 177 districts.
                     </p>
                   </div>
@@ -387,31 +386,33 @@ export default function FoodgrainDashboard() {
                 <li className="flex items-start">
                   <span className="text-green-600 mr-3 text-xl">✓</span>
                   <span className="text-gray-700">
-                    <strong>Punjab leads</strong> in foodgrain stocks with 50T+ average, followed by Haryana and Uttar Pradesh
+                    <strong>Punjab leads</strong> in central stock contribution with ~503.13B current stock,
+                    followed by Haryana and Uttar Pradesh.                  </span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-green-600 mr-3 text-xl">✓</span>
+                  <span className="text-gray-700">
+                    <strong>Rice-Raw dominates</strong> composition at 47%, followed by Wheat at 43%.
                   </span>
                 </li>
                 <li className="flex items-start">
                   <span className="text-green-600 mr-3 text-xl">✓</span>
                   <span className="text-gray-700">
-                    <strong>Wheat dominates</strong> composition at 43%, followed by Rice-Raw at 47%
+                    <strong>Seasonal patterns</strong> show peaks around Jun–Jul and Nov–Dec
+                    (procurement / harvest cycles).
                   </span>
                 </li>
                 <li className="flex items-start">
                   <span className="text-green-600 mr-3 text-xl">✓</span>
                   <span className="text-gray-700">
-                    <strong>Seasonal patterns</strong> show peaks during harvest seasons (June-July, Nov-Dec)
+                    <strong>Forecast accuracy</strong> of 85%+ achieved for 30-day forecasts
+                    on recent validation windows.
                   </span>
                 </li>
                 <li className="flex items-start">
                   <span className="text-green-600 mr-3 text-xl">✓</span>
                   <span className="text-gray-700">
-                    <strong>Forecast accuracy</strong> of 85%+ achieved for 30-day predictions
-                  </span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-green-600 mr-3 text-xl">✓</span>
-                  <span className="text-gray-700">
-                    <strong>5,000+ anomalies detected</strong> with highest concentration in Jharkhand and Andhra Pradesh
+                    <strong>4,992 anomalies detected</strong> with highest concentration in Jharkhand and Punjab.
                   </span>
                 </li>
               </ul>
@@ -425,19 +426,8 @@ export default function FoodgrainDashboard() {
         <div className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
           <div className="text-center">
             <p className="text-gray-400 text-sm">
-              © 2025 Foodgrain Stocks Analysis Project. Built with React, Tailwind CSS, and Power BI.
+              © 2025 Foodgrain Stocks Analysis Project. Built with 🤯 by <a href="https://alok-the-data-guy.vercel.app/">@AlokTheDataGuy</a>.
             </p>
-            <div className="flex justify-center space-x-6 mt-4">
-              <a href={links.github} className="text-gray-400 hover:text-white transition">
-                <Github className="w-5 h-5" />
-              </a>
-              <a href="mailto:your@email.com" className="text-gray-400 hover:text-white transition">
-                <Mail className="w-5 h-5" />
-              </a>
-              <a href="https://linkedin.com" className="text-gray-400 hover:text-white transition">
-                <Linkedin className="w-5 h-5" />
-              </a>
-            </div>
           </div>
         </div>
       </footer>
