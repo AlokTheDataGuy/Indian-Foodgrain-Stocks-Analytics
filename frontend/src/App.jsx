@@ -7,7 +7,7 @@ export default function FoodgrainDashboard() {
 
   // Replace these with your actual links
   const links = {
-    powerbi: 'https://app.powerbi.com/reportEmbed?reportId=3d83cb04-7a0e-467f-835d-592f1fdf7396&autoAuth=true&ctid=56c1d497-700b-49cf-8f8d-3dd6b20d522f&navContentPaneEnabled=false&filterPaneEnabled=true',
+    powerbi: 'https://app.powerbi.com/reportEmbed?reportId=3d83cb04-7a0e-467f-835d-592f1fdf7396&autoAuth=true&ctid=56c1d497-700b-49cf-8f8d-3dd6b20d522f&navContentPaneEnabled=false&filterPaneEnabled=false',
     report: 'https://drive.google.com/file/d/1u0ZBS5nQxcECOvM5_2ygXis6L0R4eeF6/view?usp=sharing',
     notebook: 'https://drive.google.com/drive/folders/16PIuugM8tDYp4rFYppV0g_fTB-deBikG?usp=sharing',
     data: 'https://drive.google.com/drive/folders/1UHsvuj50QebVc3VSkmE4GmUBG3Mgzq0k?usp=sharing',
