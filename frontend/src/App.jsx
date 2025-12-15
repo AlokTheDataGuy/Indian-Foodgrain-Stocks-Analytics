@@ -1,9 +1,18 @@
 import React, { useState } from 'react';
 import { FileText, Code, Database, BarChart3, Download, View, ExternalLink, ChevronDown, ChevronUp, Github, Linkedin, Mail } from 'lucide-react';
+import slide1 from '../../screenshots/overview.png';
+import slide2 from '../../screenshots/commodity.png';
+import slide3 from '../../screenshots/state.png';
+import slide4 from '../../screenshots/anomalies.png';
+import slide5 from '../../screenshots/forecast.png';
+
 
 export default function FoodgrainDashboard() {
   const [activeTab, setActiveTab] = useState('dashboard');
   const [showMethodology, setShowMethodology] = useState(false);
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [showWarning, setShowWarning] = useState(false);
+
 
   // Replace these with your actual links
   const links = {
@@ -58,6 +67,35 @@ export default function FoodgrainDashboard() {
     { label: 'States Covered', value: '26' },
     { label: 'Commodities', value: '4' }
   ];
+
+  const slides = [
+    {
+      img: slide1,
+      title: 'Foodgrain Overview',
+      desc: 'National KPIs and high-level stock trends'
+    },
+    {
+      img: slide2,
+      title: 'Commodity Deep Dive',
+      desc: 'Commodity-wise trends with moving averages'
+    },
+    {
+      img: slide3,
+      title: 'State-Level Drilldown',
+      desc: 'State and district-level stock distribution'
+    },
+    {
+      img: slide4,
+      title: 'Anomaly Monitoring',
+      desc: 'Z-score based anomaly detection'
+    },
+    {
+      img: slide5,
+      title: 'Stock Forecast & Predictions',
+      desc: '30D & 90D forecasts with confidence intervals'
+    }
+  ];
+
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 via-white to-green-50">
@@ -143,40 +181,70 @@ export default function FoodgrainDashboard() {
           <div className="space-y-6">
             <div className="bg-white rounded-lg shadow-lg overflow-hidden">
               <div className="bg-gradient-to-r from-green-600 to-green-700 px-6 py-4">
-                <h2 className="text-xl font-bold text-white">Foodgrain Analytics & Forecasting Dashboard</h2>
+                <h2 className="text-xl font-bold text-white">
+                  {slides[currentSlide].title}
+                </h2>
                 <p className="text-green-100 text-sm mt-1">
-                  National KPIs → Commodity Trends → State Insights → Anomaly Detection → Forecasting
+                  Snapshot of {slides[currentSlide].desc}
                 </p>
+
               </div>
 
-              {/* Power BI Embed */}
+              {/* Screenshot Carousel */}
               <div className="p-4 bg-gray-50">
-                <div className="bg-white rounded-lg shadow-inner border-2 border-dashed border-gray-300">
-                  <div className="w-full overflow-hidden">
-                    <iframe
-                      title="Foodgrain Dashboard"
-                      src={links.powerbi}
-                      frameBorder="0"
-                      allowFullScreen={true}
-                      className="w-full"
-                      style={{
-                        height: '56.25vw', // 16:9 aspect ratio (9/16 = 0.5625)
-                        maxHeight: '720px', // Maximum height
-                        minHeight: '400px'  // Minimum height for mobile
-                      }}
-                    />
+                <div className="bg-white rounded-lg shadow-inner border border-gray-200 relative">
+
+                  <img
+                    src={slides[currentSlide].img}
+                    alt={`Dashboard slide ${currentSlide + 1}`}
+                    className="w-full rounded-lg"
+                  />
+
+                  {/* Controls */}
+                  <button
+                    onClick={() =>
+                      setCurrentSlide((prev) => (prev === 0 ? slides.length - 1 : prev - 1))
+                    }
+                    className="absolute left-3 top-1/2 -translate-y-1/2 bg-white/80 p-2 rounded-full shadow hover:bg-white"
+                  >
+                    ‹
+                  </button>
+
+                  <button
+                    onClick={() =>
+                      setCurrentSlide((prev) => (prev === slides.length - 1 ? 0 : prev + 1))
+                    }
+                    className="absolute right-3 top-1/2 -translate-y-1/2 bg-white/80 p-2 rounded-full shadow hover:bg-white"
+                  >
+                    ›
+                  </button>
+
+                  {/* Dots */}
+                  <div className="flex justify-center gap-2 py-3">
+                    {slides.map((_, idx) => (
+                      <button
+                        key={idx}
+                        onClick={() => setCurrentSlide(idx)}
+                        className={`w-2.5 h-2.5 rounded-full ${idx === currentSlide ? 'bg-green-600' : 'bg-gray-300'
+                          }`}
+                      />
+                    ))}
                   </div>
                 </div>
               </div>
 
+
               {/* Quick Links Below Dashboard */}
               <div className="px-6 py-4 bg-gray-50 border-t border-gray-200">
                 <div className="flex flex-wrap gap-3">
-                  <a href={links.powerbi} target="_blank" rel="noopener noreferrer"
-                    className="inline-flex items-center px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition text-sm font-medium">
+                  <button
+                    onClick={() => setShowWarning(true)}
+                    className="inline-flex items-center px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition text-sm font-medium"
+                  >
                     <ExternalLink className="w-4 h-4 mr-2" />
-                    Open in Full Screen
-                  </a>
+                    View Interactive Dashboard
+                  </button>
+
                   <a href={links.report} target="_blank" rel="noopener noreferrer"
                     className="inline-flex items-center px-4 py-2 bg-white border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition text-sm font-medium">
                     <FileText className="w-4 h-4 mr-2" />
@@ -302,9 +370,9 @@ export default function FoodgrainDashboard() {
 
               <div className="bg-green-50 border-l-4 border-green-600 p-4 mt-4">
                 <p className="text-sm text-green-800">
-                    <strong>Key Achievement:</strong> Processed and analyzed over <strong>2.2M+</strong> foodgrain
-  stock records, built a fully reproducible pipeline for national–state–district aggregation, 30D and 90D forecasting, and detected <strong>4,992 anomalies </strong> 
-   across commodities.
+                  <strong>Key Achievement:</strong> Processed and analyzed over <strong>2.2M+</strong> foodgrain
+                  stock records, built a fully reproducible pipeline for national–state–district aggregation, 30D and 90D forecasting, and detected <strong>4,992 anomalies </strong>
+                  across commodities.
                 </p>
               </div>
             </div>
@@ -420,6 +488,38 @@ export default function FoodgrainDashboard() {
           </div>
         )}
       </div>
+
+      {showWarning && (
+        <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50">
+    <div className="bg-white rounded-lg shadow-xl max-w-md w-full p-6">
+      <h3 className="text-lg font-bold text-gray-900 mb-2">
+        Power BI Sign-In Required
+      </h3>
+      <p className="text-sm text-gray-600 mb-4">
+        This dashboard is hosted on Power BI. A Microsoft Power BI account is
+        required to access the interactive version.
+      </p>
+
+      <div className="flex justify-end gap-3">
+        <button
+          onClick={() => setShowWarning(false)}
+          className="px-4 py-2 text-sm border rounded-lg hover:bg-gray-100"
+        >
+          Cancel
+        </button>
+        <a
+          href={links.powerbi}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="px-4 py-2 text-sm bg-green-600 text-white rounded-lg hover:bg-green-700"
+        >
+          Continue
+        </a>
+      </div>
+    </div>
+  </div>
+)}
+
 
       {/* Footer */}
       <footer className="bg-gray-900 text-white mt-16">
