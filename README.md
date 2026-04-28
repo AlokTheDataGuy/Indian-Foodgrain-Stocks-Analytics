@@ -1,227 +1,190 @@
-# 🌾 Foodgrain Stock Analytics: Forecasting, Anomaly Detection & BI Dashboard
+# 🌾 India Foodgrain Stock Analytics
+### Forecasting · Anomaly Detection · BI Dashboard
 
-## 📌 Executive Summary
+An end-to-end data analytics system for monitoring India's central foodgrain reserves — built to support procurement planning, early anomaly detection, and policy decision-making across 15 years of daily stock data.
 
-India’s foodgrain stock levels fluctuate heavily across states, commodities, and seasons. To support better **policy decisions, procurement planning, and early anomaly detection**, this project analyzes **15 years (2011–2025)** of daily stock data across:
-
-- **Paddy**
-- **Rice (Raw)**
-- **Rice (Parboiled)**
-- **Wheat (Including URS)**
-
-Using **Python, SQL, Prophet forecasting, anomaly scoring, and Power BI dashboards**, the project uncovers:
-
-### 🔍 Key Insights
-- **National stock shows strong seasonality**, with major peaks during procurement months.
-- **Rice-Raw and Wheat contribute ~90% of India's total central stocks**.
-- **Anomalies cluster in certain states**, indicating potential reporting lapses or extreme events.
-- **Prophet models predict stock levels up to 90 days forward**, supporting early procurement alerts.
-- **State & district-level variance is extremely high**, requiring targeted interventions.
-
-### 🎯 Business Value
-This project enables:
-- Early detection of abnormal stock dips/spikes  
-- Improved procurement & storage planning  
-- Commodity-wise forecasting for policy teams  
-- Unified view of national → state → district stock patterns  
+[![Python](https://img.shields.io/badge/Python-3.10+-3776AB?logo=python&logoColor=white)](https://python.org)
+[![SQL](https://img.shields.io/badge/SQL-PostgreSQL-336791?logo=postgresql&logoColor=white)](https://postgresql.org)
+[![Power BI](https://img.shields.io/badge/Power%20BI-DAX-F2C811?logo=powerbi&logoColor=black)](https://powerbi.microsoft.com)
+[![Prophet](https://img.shields.io/badge/Forecasting-Prophet-4285F4)](https://facebook.github.io/prophet/)
+[![Records](https://img.shields.io/badge/Records-2.2M+-success)]()
 
 ---
 
-## 🧩 Business Problem
+## Overview
 
-Government agencies need a **reliable, data-driven system** to understand:
+India's foodgrain reserves fluctuate sharply across states, commodities, and procurement seasons. Government agencies managing these stocks need reliable tools to understand unexpected changes, identify at-risk districts, and anticipate future supply levels before shortages develop.
 
-- Why stock levels change unexpectedly  
-- Which states/districts contribute most to shortages  
-- How future stock levels will behave  
-- Whether reported stocks are consistent or anomalous  
-
-This project answers:
-
-> **“How can we monitor foodgrain stocks in real-time, detect anomalies, and forecast national/state trends for better decision-making?”**
+This project delivers that capability. It ingests 15 years (2011–2025) of daily stock data for four commodities — **Paddy, Rice (Raw), Rice (Parboiled), and Wheat** — across all Indian states and districts, then runs it through a structured analytics pipeline covering SQL-based ETL, statistical anomaly detection, Prophet time-series forecasting, and a multi-page Power BI dashboard.
 
 ---
 
-## 🔍 Methodology
+## Headline Findings
 
-### **1️⃣ Data Pipeline (SQL + Python + Cleaning)**  
-Raw files (`data/raw/*.csv`) are ingested and processed using SQL scripts:
-
-- `importing_&_cleaning.sql`
-- `creating_&_indexing.sql`
-- `all_commodities_daily_agg.sql`
-
-**Outputs → `data/cleaned/`**
-- `all_commodities_daily.csv`
-- `state_daily.csv`
-- `district_daily.csv`
-- `national_daily.csv`
-- `anomalies_result.csv`
+| # | Finding | Detail |
+|---|---------|--------|
+| 1 | **Rice-Raw and Wheat dominate national reserves** | Together they account for ~90% of central stock; Rice-Raw ~47%, Wheat ~43% |
+| 2 | **Paddy is lowest in volume but highest in volatility** | Largest coefficient of variation across all commodities |
+| 3 | **500+ anomalies identified across the dataset** | Clustering in Jharkhand, Punjab, and Chhattisgarh — indicating reporting lapses or extreme procurement events |
+| 4 | **Wheat and Rice-Raw show most anomalies** | Driven by irregular reporting cadence and large procurement swings |
+| 5 | **Prophet forecasts within ±8–12% uncertainty** | 30-day and 90-day forward estimates validated against held-out periods |
+| 6 | **Punjab, Haryana, and UP supply the bulk of central stocks** | High inter-state variance enables prioritisation of monitoring effort |
 
 ---
 
-### **2️⃣ Anomaly Detection (Python)**  
-Notebook: `notebooks/eda.ipynb`
-
-Techniques used:
-- Rolling mean (7 day, 30 day)
-- Z-score calculation per commodity × state
-- % change anomaly flags  
-- Outlier labeling for dashboards
-
-**Output → `anomalies_result.csv`**
-
----
-
-### **3️⃣ Forecasting (Prophet Models)**  
-Notebook: `notebooks/forecasting.ipynb`
-
-- Cleaned each commodity time-series
-- Removed anomalies for model stability
-- Built 365-day future forecast  
-- Exported results for BI
-
-**Output → `data/forecasted/*.csv`**  
-(Your project uses Power BI to generate forecast visuals.)
-
----
-
-### **4️⃣ Power BI Dashboard (End-to-End BI App)**  
-File: `powerbi/foodgrain_stocks_analysis.pbix`
-
-Dashboards include:
-
-#### ✅ **Foodgrain Overview**
-- National Stock Trends  
-- Commodity Contribution  
-- Top States by Stock  
-- Composition Over Time  
-
-#### ✅ **Commodity Deep Dive**
-- Latest stock levels  
-- Moving averages  
-- Commodity-wise yearly share  
-- Market share pie chart  
-- Daily average stock (last 12 months)
-
-#### ✅ **State-Level Drilldown**
-- Geo map  
-- Top 10 districts  
-- State performance breakdown  
-- QoQ & YoY metrics
-
-#### ✅ **Anomaly Monitoring**
-- Total anomalies  
-- Top states by anomalies  
-- Commodity anomaly distribution  
-- Daily anomaly trend  
-
-
+## Dashboard Pages
 
 ![overview](./screenshots/overview.png)
+### Overview
+National stock trend line, commodity contribution over time, top states by reserve volume, and a composition area chart showing the share of each commodity across 15 years.
+
 ![deep\_dive](./screenshots/commodity.png)
+### Commodity Deep Dive
+Latest stock level per commodity, 7-day and 30-day moving averages, yearly market share breakdown, and daily average for the trailing 12 months.
+
 ![state](./screenshots/state.png)
+### State-Level Drilldown
+India choropleth map, top-10 districts by stock volume, state-vs-state performance comparison, and QoQ and YoY delta metrics with conditional formatting.
+
 ![anomalies](./screenshots/anomalies.png)
+### Anomaly Monitoring
+Total anomaly count with trend, top states by anomaly frequency, commodity-wise anomaly distribution, and a daily anomaly timeline for operational alerting.
+
 ![forecast](./screenshots/forecast.png)
-
-
----
-
-## 🛠 Skills Demonstrated
-
-### ✔ SQL  
-Joins, window functions, aggregations, indexing, incremental cleaning
-
-### ✔ Python  
-Pandas, NumPy, Prophet, anomaly detection, time-series modeling
-
-### ✔ Power BI  
-DAX measures, data modeling, forecasting visuals, geo charts, KPI dashboards
-
-### ✔ Data Engineering  
-Data preprocessing pipeline, structured folder design, reproducible scripts
+### Forecasting
+30-day and 90-day Prophet forecasts per commodity, forecast uncertainty bands, and comparison against actuals for the most recent completed quarter.
 
 ---
 
-## 📈 Results & Insights
-
-### 📌 Forecasting
-- Prophet models successfully forecast **30D / 90D stock** for each commodity  
-- Forecast uncertainty ±8–12% depending on commodity & season
-
-### 📌 Anomalies
-- **Wheat & Rice-Raw exhibit most anomalies** due to reporting variations  
-- **Jharkhand, Punjab, Chhattisgarh** show highest anomaly frequency  
-
-### 📌 State & District Breakdown
-- Punjab, Haryana, UP dominate central stock contributions  
-- High variance between states → enables prioritization  
-
-### 📌 Commodity Trends
-- Rice-Raw makes up **~47%** of national stock  
-- Wheat contributes **~43%**  
-- Paddy has lowest share but highest volatility  
-
----
-
-## 📂 Repository Structure
+## Architecture
 
 ```
+data/raw/*.csv  (2.2M+ rows across 4 commodities, 2011–2025)
+       │
+       ▼
+sql/importing_&_cleaning.sql        ← Ingest, deduplicate, type-cast
+sql/creating_&_indexing.sql         ← Schema + performance indexes
+sql/all_commodities_daily_agg.sql   ← National / state / district rollups
+       │
+       ▼
+data/cleaned/
+  ├── national_daily.csv
+  ├── state_daily.csv
+  ├── district_daily.csv
+  ├── all_commodities_daily.csv
+  └── anomalies_result.csv
+       │
+       ├──────────────────────────────────────────┐
+       ▼                                          ▼
+notebooks/eda.ipynb                   notebooks/forecasting.ipynb
+  Z-score anomaly detection             Prophet model per commodity
+  Rolling mean (7d, 30d)                365-day forward forecast
+  % change flags                        Anomaly-filtered training set
+  → anomalies_result.csv              → data/forecasted/*.csv
+       │                                          │
+       └──────────────┬───────────────────────────┘
+                      ▼
+         powerbi/foodgrain_stocks_analysis.pbix
+              5-page interactive dashboard
+```
 
+## Skills Demonstrated
+
+**SQL** — multi-table joins, window functions, incremental cleaning, indexing strategy, and aggregation rollups from district → state → national level
+
+**Python** — Pandas and NumPy for pipeline orchestration; Z-score and rolling-window anomaly detection; Facebook Prophet for time-series modelling with anomaly-filtered training sets
+
+**Power BI** — 30+ DAX measures, star schema data model, geo map visuals, KPI cards with conditional formatting, and forecast visuals with confidence intervals
+
+**Data Engineering** — structured folder layout, reproducible SQL + notebook pipeline, clean separation of raw / cleaned / forecasted data layers
+
+---
+
+## Repository Structure
+
+```
 foodgrain-stock-analytics/
-│── data/
-│     ├── raw/
-│     │    ├── paddy_2011_2025.csv
-│     │    ├── rice_raw_2011_2025.csv
-│     │    ├── rice_parboiled_2011_2025.csv
-│     │    └── wheat_2011_2025.csv
-│     ├── cleaned/
-│     │    ├── all_commodities_daily.csv
-│     │    ├── anomalies_result.csv
-│     │    ├── district_daily.csv
-│     │    ├── national_daily.csv
-│     │    └── state_daily.csv
-│     └── forecasted/
+├── data/
+│   ├── raw/                        # Source CSVs (2.2M+ rows)
+│   │   ├── paddy_2011_2025.csv
+│   │   ├── rice_raw_2011_2025.csv
+│   │   ├── rice_parboiled_2011_2025.csv
+│   │   └── wheat_2011_2025.csv
+│   ├── cleaned/                    # Pipeline outputs
+│   │   ├── all_commodities_daily.csv
+│   │   ├── national_daily.csv
+│   │   ├── state_daily.csv
+│   │   ├── district_daily.csv
+│   │   └── anomalies_result.csv
+│   └── forecasted/                 # Prophet model outputs
 │
-│── notebooks/
-│     ├── eda.ipynb
-│     ├── forecasting.ipynb
-│     └── db_import.ipynb
+├── notebooks/
+│   ├── eda.ipynb                   # EDA + anomaly detection
+│   ├── forecasting.ipynb           # Prophet modelling + export
+│   └── db_import.ipynb             # Database ingestion helper
 │
-│── sql/
-│     ├── importing_&*cleaning.sql
-│     ├── creating*&_indexing.sql
-│     ├── cleaned_data_exporting.sql
-│     ├── all_commodities_daily_agg.sql
-│     └── select_all.sql
+├── sql/
+│   ├── importing_&_cleaning.sql
+│   ├── creating_&_indexing.sql
+│   ├── cleaned_data_exporting.sql
+│   ├── all_commodities_daily_agg.sql
+│   └── select_all.sql
 │
-│── powerbi/
-│     ├── foodgrain_stocks_analysis.pbix
-│     └── icons/
+├── powerbi/
+│   ├── foodgrain_stocks_analysis.pbix
+│   └── icons/
 │
-│── frontend/
-│     ├── index.html
-│     ├── src/
-│     └── vite.config.js
+├── frontend/                       # React web app (in progress)
+│   ├── index.html
+│   ├── src/
+│   └── vite.config.js
 │
-│── requirements.txt
-│── README.md
-
+├── requirements.txt
+└── README.md
 ```
 
 ---
 
-## 🚀 Next Steps
+## Getting Started
 
-1. Integrate **live API ingestion** for real-time stock monitoring  
-2. Deploy dashboard as a **web app** (your React frontend already started!)  
-3. Build **LSTM / ARIMA ensemble models** for improved forecasting  
-4. Add **alerting engine** for anomaly notifications  
-5. Develop **district-level shortage prediction model**
+```bash
+# 1. Install Python dependencies
+pip install -r requirements.txt
+
+# 2. Run SQL pipeline (PostgreSQL or MySQL)
+#    Execute scripts in this order:
+#    sql/importing_&_cleaning.sql
+#    sql/creating_&_indexing.sql
+#    sql/all_commodities_daily_agg.sql
+#    sql/cleaned_data_exporting.sql
+
+# 3. Run notebooks
+jupyter lab notebooks/eda.ipynb           # Anomaly detection
+jupyter lab notebooks/forecasting.ipynb   # Prophet forecasting
+
+# 4. Open the dashboard
+#    Open powerbi/foodgrain_stocks_analysis.pbix in Power BI Desktop
+#    Point the data source to data/cleaned/
+```
 
 ---
 
-## 🙌 Author  
-**Alok Deep**  
-_Data Analyst | Python | SQL | BI | Forecasting_
+## Roadmap
 
+- Live API ingestion for real-time stock monitoring
+- Deploy as full web app (React frontend scaffolded)
+- LSTM / ARIMA ensemble to complement Prophet forecasts
+- Alerting engine for anomaly notifications via email or webhook
+- District-level shortage prediction model
+
+---
+
+## Author
+
+**Alok Deep** — Data Analyst | Python · SQL · Power BI · Forecasting
+
+[LinkedIn](https://www.linkedin.com/in/alok-deep-3381b027b) · [Portfolio](https://alok-deep.vercel.app/) · [Email](mailto:alokdeep9925@gmail.com)
+
+---
+
+*All data sourced from publicly available government foodgrain stock reports. This project is for analytical and portfolio purposes.*
